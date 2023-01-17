@@ -31,6 +31,14 @@ const routes: Routes = [
       {
         path: 'product-list',
         loadChildren: () => import('../product-list/product-list.module').then(m => m.ProductListPageModule)
+      },
+      {
+        path: 'category-form',
+        loadChildren: () => import('../category-form/category-form.module').then(m => m.CategoryFormPageModule)
+      },
+      {
+        path: 'category-list',
+        loadChildren: () => import('../category-list/category-list.module').then(m => m.CategoryListPageModule)
       }
 
     ]
@@ -45,4 +53,4 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
 })
-export class TabsPageRoutingModule {}
+export class TabsPageRoutingModule { }

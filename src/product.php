@@ -4,31 +4,26 @@ if ($_GET['action'] == 'add') {
   $data = json_decode(file_get_contents('php://input'), true);
 
 
-  $query = $pdo->prepare("INSERT INTO product (title, picture, video_url, description, cooktime, preparetime, cost, nbportion, tools, level, ingredients, steps) VALUES (:title, :picture, :video_url, :description, :cooktime, :preparetime, :cost, :nbportion, :tools, :level, :ingredients, :steps)");
+  $query = $pdo->prepare("INSERT INTO products (title, picture, video_url, description, cooktime, preparetime, cost, nbportion, tools, level, ingredients, steps) VALUES (:title, :picture, :video_url, :description, :cooktime, :preparetime, :cost, :nbportion, :tools, :level, :ingredients, :steps)");
 
   $query->execute($data);
 
   echo json_encode($data);
-
-
 }
 
 if ($_GET['action'] == 'edit') {
   $data = json_decode(file_get_contents('php://input'), true);
 
 
-  $query = $pdo->prepare("REPLACE INTO product (id,title, picture, video_url, description, cooktime, preparetime, cost, nbportion, tools, level, ingredients, steps) VALUES (:id,:title, :picture, :video_url, :description, :cooktime, :preparetime, :cost, :nbportion, :tools, :level, :ingredients, :steps)");
+  $query = $pdo->prepare("REPLACE INTO products (id,title, picture, video_url, description, cooktime, preparetime, cost, nbportion, tools, level, ingredients, steps) VALUES (:id,:title, :picture, :video_url, :description, :cooktime, :preparetime, :cost, :nbportion, :tools, :level, :ingredients, :steps)");
 
   $query->execute($data);
 
   echo json_encode($data);
-
-
 }
 
-
 if ($_GET['action'] == 'getall') {
-  $query = $pdo->prepare("SELECT * FROM product");
+  $query = $pdo->prepare("SELECT * FROM products");
   $query->execute();
   $products = $query->fetchAll(PDO::FETCH_ASSOC);
 
@@ -36,21 +31,17 @@ if ($_GET['action'] == 'getall') {
 }
 
 if ($_GET['action'] == 'getone') {
-  $data= json_decode(file_get_contents('php://input'), true);
-  $query = $pdo->prepare("SELECT * FROM product WHERE id=:id");
-  $query->execute($data);
+  $query = $pdo->prepare("SELECT * FROM products where id=:id");
+  $query->execute([':id' => $_GET['id']]);
   $product = $query->fetch(PDO::FETCH_ASSOC);
 
   echo json_encode($product);
 }
 
+if ($_GET['action'] == 'delete') {
+  $data = json_decode(file_get_contents('php://input'), true);
+  $result = $pdo->prepare("DELETE from products WHERE id=:id");
+  $result->execute($data);
 
-if ($_GET['action']=='delete')
-{
-  $data= json_decode(file_get_contents('php://input'), true);
-
-  $result=$pdo->prepare("DELETE FROM product WHERE id=:id");
-  $test=$result->execute($data);
-
-  echo json_decode($test);
+  echo json_encode($test);
 }

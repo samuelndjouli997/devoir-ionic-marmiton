@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: 'app-product-list',
@@ -12,9 +12,9 @@ export class ProductListPage implements OnInit {
   constructor(private http: HttpClient) { }
 
 
-  delete(id: any){
+  delete(id: any) {
 
-    this.http.post('http://localhost/marmiton/marmiton/src/product.php?action=delete', JSON.stringify({'id':id})).toPromise().then((response: any)=>{console.log(response)});
+    this.http.post('http://localhost:8888/marmiton_devoir/src/product.php?action=delete', JSON.stringify({ 'id': id })).toPromise().then((response: any) => { console.log(response) });
 
     this.ngOnInit();
   }
@@ -22,7 +22,7 @@ export class ProductListPage implements OnInit {
 
   ngOnInit() {
 
-    this.http.get('http://localhost/marmiton/marmiton/src/product.php?action=getall').toPromise().then((response: any)=>{this.products=response});
+    this.http.get('http://localhost:8888/marmiton_devoir/src/product.php?action=getall').toPromise().then((response: any) => { this.products = response });
 
   }
 
